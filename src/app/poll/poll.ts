@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { PollService } from '../poll.service';
 import { Poll } from '../poll.models';
 import { OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-poll',
-  imports: [],
+  imports: [CommonModule, FormsModule],
   templateUrl: './poll.html',
   styleUrl: './poll.css'
 })
