@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class PollComponent implements OnInit{
   newPoll : Poll = {
+    id:0,
     question: '',
     options: [
       {optionText: '', voteCount: 0},
@@ -45,13 +46,14 @@ export class PollComponent implements OnInit{
         this.resetPoll();
       },
       error: (error) => {
-        console.error("Error fetching polls: ", error);
+        console.error("Error creating polls: ", error);
       }
     });
   }
 
   resetPoll(){
     this.newPoll = {
+      id:0,
       question: '',
       options: [
         {optionText: '', voteCount: 0},
@@ -59,6 +61,25 @@ export class PollComponent implements OnInit{
       ]
     };
   }
+
+  vote(pollId: number, optionIndex:number){
+    this.pollService.vote(pollId,optionIndex).subscribe({
+      next: () => {
+        const poll = this.polls.find(p=>p.id == pollId);
+        if(poll){
+          poll.options[optionIndex].voteCount++;
+        }
+      },
+      error: (error) => {
+        console.error("Error voting on a poll: ", error);
+      }
+    });
+  }
+
+  addOption(){
+    this.newPoll.options.push({optionText: '', voteCount: 0});
+  }
+  
 
   trackByIndex(index : number) : number{
     return index;

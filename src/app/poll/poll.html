@@ -17,17 +17,23 @@
         class="form-control"
         required
         />
+        <button *ngIf = "newPoll.options.length>2" class = "btn btn-danger"
+            (click) = "newPoll.options.splice(i,1)">
+            Remove
+        </button>
         </div>
     </div>
 
 <button (click) ="createPoll()" class="btn btn-primary">Create Poll</button>
+<button (click) ="addOption()" class="btn btn-secondary">Add another option</button>
+
 <h2 class="mt-4 text-center">Available Polls</h2>
 <div class="polls-list">
     <div *ngFor="let poll of polls" class="border rounded p-3 mb-3">
         <h3>{{poll.question}}</h3>
         <div class="options-list">
             <div *ngFor="let option of poll.options; let i = index">
-                <button class="btn btn-outline-primary me-2 me-2">
+                <button (click)="vote(poll.id,i)" class="btn btn-outline-primary me-2 me-2">
                     {{option.optionText}} ({{option.voteCount}})
                 </button>
             </div>
